@@ -44,6 +44,7 @@
 
 
         <tr><td>人员姓名</td><td th:each="user : ${list}" th:text="${user.name}"></td></tr>
+        <tr><td>周数</td><td th:each="user : ${list}" th:text="${user.week}"></td></tr>
         <tr><td>计划工时</td><td th:each="user : ${list}" th:text="${user.manHour}"></td></tr>
 
         </thead>

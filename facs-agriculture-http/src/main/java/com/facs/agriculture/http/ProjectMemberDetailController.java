@@ -1,7 +1,11 @@
 package com.facs.agriculture.http;
 
+import com.facs.agriculture.iservice.IProjectMemberService;
 import com.facs.agriculture.iservice.IProjectService;
-import com.facs.agriculture.support.model.po.Project;
+import com.facs.agriculture.service.impl.ProjectMemberDetailServiceImpl;
+import com.facs.agriculture.service.impl.ProjectMemberServiceImpl;
+import com.facs.agriculture.support.model.po.ProjectMember;
+import com.facs.agriculture.support.model.po.ProjectMemberDetail;
 import com.facs.basic.framework.model.dto.PageRequest;
 import com.facs.basic.framework.model.rest.DataResult;
 import com.facs.basic.framework.model.rest.MutiResponse;
@@ -23,34 +27,31 @@ public class ProjectMemberDetailController {
 	@Autowired
 	private IProjectMemberDetailService projectMemberDetailService;
 
+
+	@Autowired
+	private IProjectMemberService projectmemberService;
+
+
+	@Autowired
+	private ProjectMemberDetailServiceImpl projectmemberdetailMapper;
+
 	@RequestMapping(value="index")
 	public String index(){
 		return "UserManage/index";
 	}
 
 	@RequestMapping(value="add")
-	public String add(){
-		return "UserManage/add";
-	}
 
-	public String add(Long id, HttpServletRequest requeste, IProjectService projectService){
+	public String add(Long id, HttpServletRequest requeste){
 		ModelAndView mv = new ModelAndView();
-		ProjectRequest paramData = new ProjectRequest();
+		ProjectMemberRequest paramData = new ProjectMemberRequest();
 		paramData.setId(id);
-
-		ProjectResponse object = projectService.load(paramData);
-		List<Project> list=projectService.loadAll();
+		ProjectMemberResponse object = projectmemberService.load(paramData);
+		List<ProjectMember> list=projectmemberService.loadAll();
 		requeste.setAttribute("id",id);
 		requeste.setAttribute("list",list);
-
-		return "Sum/add";
-		//1、获取所有可用project信息。参考获取project详情中的成员信息的方法
-		//2、request.setAttribute("list",object);
-		//3、页面上用for标签便利数据
-		//4、select元素的name设置为projectId
+		return "UserManage/add";
 	}
-
-
 
 	@RequestMapping(value="edit")
 	public String edit(Long id,HttpServletRequest request){

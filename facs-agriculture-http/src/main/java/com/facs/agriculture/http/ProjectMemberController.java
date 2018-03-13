@@ -46,10 +46,9 @@ public class ProjectMemberController {
 		ModelAndView mv = new ModelAndView();
 		ProjectMemberRequest paramData = new ProjectMemberRequest();
 		paramData.setId(id);
-		ProjectMemberResponse object = projectMemberService.load(paramData);
-		List<ProjectMemberDetail> list=projectMemberDetailService.loadPageByPorjectid(id);
-
-		mv.addObject("object",object);
+		ProjectMemberResponse objecta = projectMemberService.load(paramData);
+		List<ProjectMemberDetail> list=projectMemberDetailService.loadPageByMemberid(id);
+		mv.addObject("object",objecta);
 		mv.addObject("list",list);
 		mv.setViewName("Sum/show");
 		return mv;
@@ -64,7 +63,6 @@ public class ProjectMemberController {
 		List<Project> list=projectService.loadAll();
 		requeste.setAttribute("id",id);
 		requeste.setAttribute("list",list);
-
 		return "Sum/add";
 		//1、获取所有可用project信息。参考获取project详情中的成员信息的方法
 		//2、request.setAttribute("list",object);

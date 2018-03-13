@@ -148,6 +148,12 @@
 		where data_status=1 and member_id = #{memberId,jdbcType=INTEGER}
 	</select>
 
+	<select id="loadAll" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List"/>
+		from project_member_detail
+		where data_status=1
+	</select>
 
 	
 	<insert id="insert" parameterType="com.facs.agriculture.support.model.po.ProjectMemberDetail">

@@ -37,9 +37,9 @@
     <table class="table table-bordered table-hover ">
 
         <tr>
-            <td>项目号</td>
+            <td>员工工号</td>
             <td><select name="memberId" value="memberId" id="memberId">
-                <option th:each="member : ${list}" th:value="${member.id}" th:text="${project.code}"></option>
+                <option th:each="projectmember : ${list}" th:value="${projectmember.id}" th:text="${projectmember.userId}"></option>
             </select>
             </td>
         </tr>

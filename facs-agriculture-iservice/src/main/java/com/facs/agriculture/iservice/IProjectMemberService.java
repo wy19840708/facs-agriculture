@@ -15,6 +15,7 @@ public interface IProjectMemberService {
 
     List<ProjectMember> loadPageByPorjectid(Long projectId);
 
+    List<ProjectMember> loadAll();
 
     ProjectMemberResponse create(ProjectMemberRequest object);
 
@@ -22,5 +23,5 @@ public interface IProjectMemberService {
 
     public void delete(ProjectMemberRequest paramData);
 
-}
+   }
 

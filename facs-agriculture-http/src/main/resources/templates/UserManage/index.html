@@ -55,7 +55,7 @@
 		</thead>
 		<thead>
 		<tr>
-			<th>项目编号</th>
+
 			<th>人员工号</th>
 			<th>人员姓名</th>
 			<th>周数</th>
@@ -106,7 +106,6 @@
                     var tr =
 
                         '<tr content="{id}">' +
-                        '<td>{projectId}</td>' +
                         '<td>{memberId}</td>' +
                         '<td>{name}</td>' +
                         '<td>{week}</td>' +
@@ -118,7 +117,6 @@
                         newTR=newTR
 
                             .replace(new RegExp("{id}"),obj["id"]==undefined?"":obj["id"])
-                            .replace(new RegExp("{projectId}"),obj["projectId"]==undefined?"":obj["projectId"])
                             .replace(new RegExp("{memberId}"),obj["memberId"]==undefined?"":obj["memberId"])
                             .replace(new RegExp("{name}"), obj["name"]==undefined?"":obj["name"])
                             .replace(new RegExp("{week}"),obj["week"]==undefined?"":obj["week"])

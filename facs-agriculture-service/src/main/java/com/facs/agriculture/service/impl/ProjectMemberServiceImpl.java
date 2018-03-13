@@ -6,6 +6,7 @@ import com.facs.agriculture.support.model.bo.ProjectMemberQuery;
 import com.facs.agriculture.support.model.dto.ProjectMemberQueryRequest;
 import com.facs.agriculture.support.model.dto.ProjectMemberRequest;
 import com.facs.agriculture.support.model.dto.ProjectMemberResponse;
+import com.facs.agriculture.support.model.po.Project;
 import com.facs.agriculture.support.model.po.ProjectMember;
 import com.facs.basic.framework.common.util.FacsBeanUtils;
 import com.facs.basic.framework.model.bo.BoPageRequest;
@@ -23,6 +24,9 @@ public class ProjectMemberServiceImpl implements IProjectMemberService {
 
     @Autowired
     private ProjectMemberMapper projectMemberMapper;
+
+    @Autowired
+    private ProjectMemberServiceImpl projectmemberMapper;
 
     @Override
     public MutiResponse<ProjectMemberResponse> loadPage(PageRequest<ProjectMemberQueryRequest> paramData) {
@@ -49,6 +53,7 @@ public class ProjectMemberServiceImpl implements IProjectMemberService {
         return pageResponse;
     }
 
+
     @Override
     public ProjectMemberResponse load(ProjectMemberRequest paramData) {
         ProjectMember object = projectMemberMapper.load(paramData.getId());
@@ -59,6 +64,12 @@ public class ProjectMemberServiceImpl implements IProjectMemberService {
     @Override
     public List<ProjectMember> loadPageByPorjectid(Long projectId) {
         List<ProjectMember> list = projectMemberMapper.loadPageByPorjectid(projectId);
+        return list;
+    }
+
+    @Override
+    public  List<ProjectMember> loadAll() {
+        List<ProjectMember> list = projectMemberMapper.loadAll();
         return list;
     }
 

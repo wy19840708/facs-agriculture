@@ -26,4 +26,5 @@ public interface ProjectMemberMapper {
     List<ProjectMember> loadAll();
 
 	ProjectMemberResponse load(ProjectMemberRequest paramData);
+
 }
