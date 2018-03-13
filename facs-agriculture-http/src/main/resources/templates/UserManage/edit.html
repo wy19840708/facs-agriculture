@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="UTF-8"/>
+	<link rel="stylesheet" type="text/css" href="../Css/bootstrap.css" />
+	<link rel="stylesheet" type="text/css"
+		  href="../Css/bootstrap-responsive.css" />
+	<link rel="stylesheet" type="text/css" href="../Css/style.css" />
+	<script type="text/javascript" src="../Js/jquery.js"></script>
+	<script type="text/javascript" src="../Js/jquery.sorted.js"></script>
+	<script type="text/javascript" src="../Js/bootstrap.js"></script>
+	<script type="text/javascript" src="../Js/ckform.js"></script>
+	<script type="text/javascript" src="../Js/common.js"></script>
+</head>
+<style type="text/css">
+	body {
+		padding-bottom: 40px;
+	}
+
+	.sidebar-nav {
+		padding: 9px 0;
+	}
+
+	@media ( max-width : 980px) { /* Enable use of floated navbar text */
+		.navbar-text.pull-right {
+			float: none;
+			padding-left: 5px;
+			padding-right: 5px;
+		}
+	}
+</style>
+<body>
+<form action="index.html" method="post" class="definewidth m20">
+	<input type="hidden" name="id" id="id" th:value="${id}"/>
+	<table class="table table-bordered table-hover ">
+
+
+		<tr>
+			<td width="10%" class="tableleft">人员工号</td>
+			<td><input type="text" name="member_id" value="" id="memberId"/>
+			</td>
+		</tr>
+		<tr>
+			<td width="10%" class="tableleft">员工姓名</td>
+			<td><input type="text" name="name" value="" id="name"/>
+			</td>
+		</tr>
+		<tr>
+			<td width="10%" class="tableleft">周数</td>
+			<td><input type="text" name="week" value="" id="week"/>
+			</td>
+		</tr>
+		<tr>
+			<td width="10%" class="tableleft">计划工时</td>
+			<td><input type="text" name="man_hour" value="" id="manHour"/>
+			</td>
+		</tr>
+
+		<tr>
+			<td class="tableleft"></td>
+			<td>
+				<button id="addProject_member_detail" class="btn btn-primary" type="button">保存</button>
+				&nbsp;&nbsp;
+				<button type="submit" class="btn btn-success" name="backid"
+						id="backid">返回列表
+				</button>
+			</td>
+
+		</tr>
+	</table>
+</form>
+</body>
+</html>
+<script>
+
+    $(function () {
+        var id=$("#id").val();
+        $.ajax({
+            url:"/projectmemberdetail/"+id,
+            dataType:"json",
+            success:function (data) {
+                if(data.status==0){
+                    var objd = data["data"];
+                    $("#memberId").val(objd["memberId"]);
+                    $("#name").val(objd["name"]);
+                    $("#week").val(objd["week"]);
+                    $("#manHour").val(objd["manHour"]);
+
+
+                }
+            }
+        });
+
+
+        $("#addProject_member_detail").click(function () {
+            var id = $("#id").val();
+            var member_id = $("#memberId").val();
+            var name = $("#name").val();
+            var week = $("#week").val();
+            var man_hour = $("#manHour").val();
+            var param={};
+
+            param["id"]=id;
+            param["memberId"]=member_id;
+            param["name"]=name;
+            param["week"]=week;
+            param["manHour"]=man_hour;
+
+
+            $.ajax({
+                url:"/projectmemberdetail/modify",
+                type:"POST",
+                contentType: "application/json; charset=utf-8",
+                data:JSON.stringify(param),
+                dataType:"json",
+                success:function(data){
+                    if(data.status==0)
+                        window.location.href="/projectmemberdetail/index";
+                }
+            });
+        });
+    });
+
+</script>

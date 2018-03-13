@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.facs.agriculture.dao.RoleMapper">
+	<resultMap id="BaseResultMap" type="com.facs.agriculture.support.model.po.Role">
+		<result column="id" property="id" jdbcType="INTEGER" />
+		<result column="business_status" property="businessStatus" jdbcType="VARCHAR" />
+		<result column="code" property="code" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="creator" property="creator" jdbcType="INTEGER" />
+		<result column="data_status" property="dataStatus" jdbcType="INTEGER" />
+		<result column="description" property="description" jdbcType="VARCHAR" />
+		<result column="modifier" property="modifier" jdbcType="INTEGER" />
+		<result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<sql id="Base_Column_List" >
+	    id,business_status,code,create_time,creator,data_status,description,modifier,modify_time,name
+	</sql>
+
+	<select id="loadPage" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from role
+		<where>
+			and data_status=1
+		<if test="paramData.id != null">
+			and id = #{paramData.id,jdbcType=INTEGER}
+		</if>
+		<if test="paramData.businessStatus != null">
+			and business_status = #{paramData.businessStatus,jdbcType=VARCHAR}
+		</if>
+		<if test="paramData.code != null">
+			and code = #{paramData.code,jdbcType=VARCHAR}
+		</if>
+		<if test="paramData.createTime != null">
+			and create_time = #{paramData.createTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="paramData.creator != null">
+			and creator = #{paramData.creator,jdbcType=INTEGER}
+		</if>
+		<if test="paramData.dataStatus != null">
+			and data_status = #{paramData.dataStatus,jdbcType=INTEGER}
+		</if>
+		<if test="paramData.description != null">
+			and description = #{paramData.description,jdbcType=VARCHAR}
+		</if>
+		<if test="paramData.modifier != null">
+			and modifier = #{paramData.modifier,jdbcType=INTEGER}
+		</if>
+		<if test="paramData.modifyTime != null">
+			and modify_time = #{paramData.modifyTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="paramData.name != null">
+			and name = #{paramData.name,jdbcType=VARCHAR}
+		</if>
+		</where>
+		limit #{start},#{pageSize}
+	</select>
+
+	<select id="total" resultType="java.lang.Long" parameterType="map">
+		select count(1)
+		from role
+		<where>
+            and data_status=1
+		<if test="id != null">
+			and id = #{id,jdbcType=INTEGER}
+		</if>
+		<if test="businessStatus != null">
+			and business_status = #{businessStatus,jdbcType=VARCHAR}
+		</if>
+		<if test="code != null">
+			and code = #{code,jdbcType=VARCHAR}
+		</if>
+		<if test="createTime != null">
+			and create_time = #{createTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="creator != null">
+			and creator = #{creator,jdbcType=INTEGER}
+		</if>
+		<if test="dataStatus != null">
+			and data_status = #{dataStatus,jdbcType=INTEGER}
+		</if>
+		<if test="description != null">
+			and description = #{description,jdbcType=VARCHAR}
+		</if>
+		<if test="modifier != null">
+			and modifier = #{modifier,jdbcType=INTEGER}
+		</if>
+		<if test="modifyTime != null">
+			and modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="name != null">
+			and name = #{name,jdbcType=VARCHAR}
+		</if>
+		</where>
+	</select>
+
+	<select id="load" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from role
+		where data_status=1 and id = #{id}
+	</select>
+	
+	<insert id="insert" parameterType="com.facs.agriculture.support.model.po.Role">
+		<selectKey keyProperty="id" resultType="java.lang.Long">
+            select LAST_INSERT_ID()
+        </selectKey>
+		insert into role (id,business_status,code,create_time,creator,data_status,description,modifier,modify_time,name)
+		values (#{id,jdbcType=INTEGER},#{businessStatus,jdbcType=VARCHAR},#{code,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP},#{creator,jdbcType=INTEGER},#{dataStatus,jdbcType=INTEGER},#{description,jdbcType=VARCHAR},#{modifier,jdbcType=INTEGER},#{modifyTime,jdbcType=TIMESTAMP},#{name,jdbcType=VARCHAR})
+	</insert>
+	
+	<update id="update" parameterType="com.facs.agriculture.support.model.po.Role">
+		update role
+		<set>
+			<if test="businessStatus != null">
+				business_status = #{businessStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="code != null">
+				code = #{code,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="creator != null">
+				creator = #{creator,jdbcType=INTEGER},
+			</if>
+			<if test="dataStatus != null">
+				data_status = #{dataStatus,jdbcType=INTEGER},
+			</if>
+			<if test="description != null">
+				description = #{description,jdbcType=VARCHAR},
+			</if>
+			<if test="modifier != null">
+				modifier = #{modifier,jdbcType=INTEGER},
+			</if>
+			<if test="modifyTime != null">
+				modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where data_status=1 and id = #{id}
+	</update>
+</mapper>

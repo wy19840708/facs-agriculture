@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" type="text/css" href="../Css/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="../Css/bootstrap-responsive.css"/>
+    <link rel="stylesheet" type="text/css" href="../Css/style.css"/>
+    <script type="text/javascript" src="../Js/jquery.js"></script>
+    <script type="text/javascript" src="../Js/jquery.sorted.js"></script>
+    <script type="text/javascript" src="../Js/bootstrap.js"></script>
+    <script type="text/javascript" src="../Js/ckform.js"></script>
+    <script type="text/javascript" src="../Js/common.js"></script>
+</head>
+<style type="text/css">
+    body {
+        padding-bottom: 40px;
+    }
+
+    .sidebar-nav {
+        padding: 9px 0;
+    }
+
+    @media ( max-width: 980px) {
+        /* Enable use of floated navbar text */
+        .navbar-text.pull-right {
+            float: none;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+    }
+</style>
+<body>
+<form action="index.html" method="post" class="definewidth m20">
+    <input type="hidden" name="id" id="id" th:value="${id}"/>
+    <table class="table table-bordered table-hover ">
+        <tr>
+            <td width="10%" class="tableleft">项目编号</td>
+            <td><input type="text" name="code" id="code"/>
+            </td>
+        </tr>
+        <tr>
+            <td width="10%" class="tableleft">项目名称</td>
+            <td><input type="text" name="name" id="name" th:value="${obj.name}"/>
+            </td>
+        </tr>
+        <tr>
+            <td width="10%" class="tableleft">项目负责人</td>
+            <td><input type="text" name="leader" id="leader" th:value="${obj.leader}"/>
+            </td>
+        </tr>
+        <tr>
+            <td width="10%" class="tableleft">开始日期</td>
+            <td><input type="date" name="startDate" id="startDate" th:value="${obj.startDate}"/>
+            </td>
+        </tr>
+        <tr>
+            <td width="10%" class="tableleft">结束日期</td>
+            <td><input type="date" name="endDate" id="endDate" th:value="${obj.endDate}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td width="10%" class="tableleft">项目优先级</td>
+            <td><input type="text" name="priority" id="priority" th:value="${obj.priority}" />
+            </td>
+        </tr>
+
+        <tr>
+            <td width="10%" class="tableleft">项目状态</td>
+            <td><input type="text" name="businessStatus" id="businessStatus" th:value="${obj.businessStatus}"/>
+            </td>
+        </tr>
+
+
+        <tr>
+            <td class="tableleft"></td>
+            <td>
+                <button id="addProject" class="btn btn-primary" type="button">保存</button>
+                &nbsp;&nbsp;
+                <button type="submit" class="btn btn-success" name="backid"
+                        id="backid">返回列表
+                </button>
+            </td>
+
+        </tr>
+    </table>
+</form>
+</body>
+</html>
+<script>
+    $(function () {
+        var id=$("#id").val();
+        $.ajax({
+            url:"/project/"+id,
+            dataType:"json",
+            success:function (data) {
+                if(data.status==0){
+                    var objd = data["data"];
+                    $("#code").val(objd["code"]);
+                    $("#business_status").val(objd["business_status"]);
+                }
+            }
+        });
+        $("#addProject").click(function () {
+            var id = $("#id").val();
+            var code = $("#code").val();
+            var name = $("#name").val();
+            var leader = $("#leader").val();
+            var start_date = $("#startDate").val();
+            var end_date = $("#endDate").val();
+            var business_status = $("#businessStatus").val();
+            var priority = $("#priority").val();
+            var param={};
+            param["id"]=id;
+            param["code"]=code;
+            param["name"]=name;
+            param["leader"]=leader;
+            param["startDate"]=start_date;
+            param["endDate"]=end_date;
+            param["businessStatus"]=business_status;
+            param["priority"]=priority;
+
+            $.ajax({
+                url:"/project/modify",
+                type:"POST",
+                contentType: "application/json; charset=utf-8",
+                data:JSON.stringify(param),
+                dataType:"json",
+                success:function(data){
+                    if(data.status==0)
+                        window.location.href="/project/index";
+                }
+            });
+        });
+    });
+
+</script>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.facs.agriculture</groupId>
+    <artifactId>facs-agriculture</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>facs-agriculture-dao</module>
+        <module>facs-agriculture-http</module>
+        <module>facs-agriculture-iservice</module>
+        <module>facs-agriculture-service</module>
+        <module>facs-agriculture-support</module>
+        <module>facs-agriculture-test</module>
+    </modules>
+
+
+    <parent>
+        <groupId>com.facs.basic.framework</groupId>
+        <artifactId>facs-framework</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.facs.basic.framework</groupId>
+            <artifactId>facs-framework-common</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.facs.basic.framework</groupId>
+            <artifactId>facs-framework-core</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.facs.basic.framework</groupId>
+            <artifactId>facs-framework-rest</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.facs.basic.framework</groupId>
+            <artifactId>facs-framework-dao</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.facs.basic.framework</groupId>
+            <artifactId>facs-framework-model</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.facs.basic.framework</groupId>
+            <artifactId>facs-framework-plugin-redis</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.facs.basic.framework</groupId>
+            <artifactId>facs-framework-plugin-mq</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
+    </dependencies>
+</project>

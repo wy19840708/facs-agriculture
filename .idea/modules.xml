@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/facs-agriculture.iml" filepath="$PROJECT_DIR$/facs-agriculture.iml" />
+      <module fileurl="file://$PROJECT_DIR$/facs-agriculture-dao/facs-agriculture-dao.iml" filepath="$PROJECT_DIR$/facs-agriculture-dao/facs-agriculture-dao.iml" />
+      <module fileurl="file://$PROJECT_DIR$/facs-agriculture-http/facs-agriculture-http.iml" filepath="$PROJECT_DIR$/facs-agriculture-http/facs-agriculture-http.iml" />
+      <module fileurl="file://$PROJECT_DIR$/facs-agriculture-iservice/facs-agriculture-iservice.iml" filepath="$PROJECT_DIR$/facs-agriculture-iservice/facs-agriculture-iservice.iml" />
+      <module fileurl="file://$PROJECT_DIR$/facs-agriculture-service/facs-agriculture-service.iml" filepath="$PROJECT_DIR$/facs-agriculture-service/facs-agriculture-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/facs-agriculture-support/facs-agriculture-support.iml" filepath="$PROJECT_DIR$/facs-agriculture-support/facs-agriculture-support.iml" />
+      <module fileurl="file://$PROJECT_DIR$/facs-agriculture-test/facs-agriculture-test.iml" filepath="$PROJECT_DIR$/facs-agriculture-test/facs-agriculture-test.iml" />
+    </modules>
+  </component>
+</project>

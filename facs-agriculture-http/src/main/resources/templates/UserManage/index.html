@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="UTF-8"/>
+	<link rel="stylesheet" type="text/css" href="../Css/bootstrap.css"/>
+	<link rel="stylesheet" type="text/css"
+		  href="../Css/bootstrap-responsive.css"/>
+	<link rel="stylesheet" type="text/css" href="../Css/style.css"/>
+	<script type="text/javascript" src="../Js/jquery.js"></script>
+	<script type="text/javascript" src="../Js/jquery.sorted.js"></script>
+	<script type="text/javascript" src="../Js/bootstrap.js"></script>
+	<script type="text/javascript" src="../Js/ckform.js"></script>
+	<script type="text/javascript" src="../Js/common.js"></script>
+
+	<style type="text/css">
+		body {
+			padding-bottom: 40px;
+		}
+
+		.sidebar-nav {
+			padding: 9px 0;
+		}
+
+		@media ( max-width: 980px) {
+			/* Enable use of floated navbar text */
+			.navbar-text.pull-right {
+				float: none;
+				padding-left: 5px;
+				padding-right: 5px;
+			}
+		}
+	</style>
+	<script type="text/javascript" src="../js/xiangmu.js"></script>
+
+</head>
+<body>
+
+<form class="form-inline definewidth m20" action="index.html"
+	  method="get">
+	<button type="button" class="btn btn-success" id="addnew">新增项目信息</button>
+</form>
+
+<div class="x-body">
+	<table id="project_member_detailtable" class="table table-bordered table-hover definewidth m10">
+
+
+
+		<thead>
+		<tr>
+			<th>项目名称</th>
+			<td colspan="10">填入搜索到的项目名称</td>
+
+		</tr>
+		</thead>
+		<thead>
+		<tr>
+			<th>项目编号</th>
+			<th>人员工号</th>
+			<th>人员姓名</th>
+			<th>周数</th>
+			<th>计划工时</th>
+			<th>操作</th>
+
+		</tr>
+		</thead>
+
+
+	</table>
+</div>
+
+<div class="inline pull-right page">
+	50 条记录 1/5 页 <a href='#'>下一页</a> <span class='current'>1</span><a
+		href='#'>2</a><a href='#'>3</a><a
+		href='#'>4</a><a href='#'>5</a> <a href='#'>下5页</a> <a href='#'>最后一页</a>
+</div>
+<script th:inline="javascript">
+    $(function () {
+        $('#addnew').click(function () {
+            window.location.href = "/projectmemberdetail/add";
+        });
+        loadPage(1);
+    });
+
+    function loadPage(pageNo){
+        var member_id="";
+        var name="";
+        var param={}
+
+        var pageParam = {};
+        pageParam["pageNo"]=pageNo;
+        pageParam["limit"]=20;
+        pageParam["param"]=param;
+
+        $.ajax({
+            url:"/projectmemberdetail/memberdetails",
+            type:"post",
+            contentType:"application/json; charset=utf-8",
+            data:JSON.stringify(pageParam),
+            dataType:"json",
+            success:function(data){
+                if(data.status==0){
+                    var dataArray = data.data["items"];
+                    $("#project_member_detailtable tbody").remove();
+                    var tbody = "<tbody>";
+                    var tr =
+
+                        '<tr content="{id}">' +
+                        '<td>{projectId}</td>' +
+                        '<td>{memberId}</td>' +
+                        '<td>{name}</td>' +
+                        '<td>{week}</td>' +
+                        '<td>{manHour}</td>' +
+                        '<td class="td-manage"><a href="javascript:void(0);" onclick="edit(this)">编辑</a>/<a href="javascript:void(0);" onclick="del(this)">删除</a></td></tr>';
+                    for (objT in dataArray){
+                        var obj = dataArray[objT];
+                        var newTR = tr;
+                        newTR=newTR
+
+                            .replace(new RegExp("{id}"),obj["id"]==undefined?"":obj["id"])
+                            .replace(new RegExp("{projectId}"),obj["projectId"]==undefined?"":obj["projectId"])
+                            .replace(new RegExp("{memberId}"),obj["memberId"]==undefined?"":obj["memberId"])
+                            .replace(new RegExp("{name}"), obj["name"]==undefined?"":obj["name"])
+                            .replace(new RegExp("{week}"),obj["week"]==undefined?"":obj["week"])
+                            .replace(new RegExp("{manHour}"), obj["manHour"]==undefined?"":obj["manHour"])
+
+                        tbody = tbody + newTR;
+                    }
+                    tbody = tbody + "</tbody>";
+                    $("#project_member_detailtable").append(tbody);
+                }
+            }
+        });
+    }
+
+    function edit(obj){
+        alert(id);
+        var id=$(obj).parent().parent().attr("content");
+        window.location.href="/projectmemberdetail/edit?id="+id;
+    }
+
+    function del(obj){
+        alert(id);
+        var id=$(obj).parent().parent().attr("content");
+        var param={};
+        param["id"]=id;
+
+        $.ajax({
+            url:"/projectmemberdetail/delete",
+            type:"post",
+            contentType:"application/json; charset=utf-8",
+            data:JSON.stringify(param),
+            dataType:"json",
+            success:function(data){
+                if(data.status==0)
+                    loadPage(1);
+            }
+        });
+    }
+
+
+</script>
+
+</body>
+</html>

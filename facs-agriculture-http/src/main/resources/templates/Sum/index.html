@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" type="text/css" href="../Css/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="../Css/bootstrap-responsive.css"/>
+    <link rel="stylesheet" type="text/css" href="../Css/style.css"/>
+    <script type="text/javascript" src="../Js/jquery.js"></script>
+    <script type="text/javascript" src="../Js/jquery.sorted.js"></script>
+    <script type="text/javascript" src="../Js/bootstrap.js"></script>
+    <script type="text/javascript" src="../Js/ckform.js"></script>
+    <script type="text/javascript" src="../Js/common.js"></script>
+
+    <style type="text/css">
+        body {
+            padding-bottom: 40px;
+        }
+
+        .sidebar-nav {
+            padding: 9px 0;
+        }
+
+        @media ( max-width: 980px) {
+            /* Enable use of floated navbar text */
+            .navbar-text.pull-right {
+                float: none;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+        }
+    </style>
+    <script type="text/javascript" src="../js/xiangmu.js"></script>
+
+</head>
+<body>
+
+<form class="form-inline definewidth m20" action="index.html"
+      method="get">
+    <button type="button" class="btn btn-success" id="addnew">新增项目信息</button>
+</form>
+<div class="x-body">
+    <table id="project_membertable" class="table table-bordered table-hover definewidth m10">
+        <thead>
+        <tr>
+            <th>项目名称</th>
+            <td colspan="10">填入搜索到的项目名称</td>
+        </tr>
+        </thead>
+        <thead>
+        <tr>
+            <th>项目编号</th>
+            <th>人员工号</th>
+            <th>姓名</th>
+            <th>计划工时</th>
+            <th>参与项目开始日期</th>
+            <th>参与项目结束日期</th>
+            <th>项目状态</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr content="">
+
+            <td class="td-manage">
+                <a href="javascript:void(0);" id="editnew" >编辑</a>
+                <a href="javascript:void(0);">删除</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="inline pull-right page">
+    50 条记录 1/5 页 <a href='#'>下一页</a> <span class='current'>1</span><a
+        href='#'>2</a><a href='#'>3</a><a
+        href='#'>4</a><a href='#'>5</a> <a href='#'>下5页</a> <a href='#'>最后一页</a>
+</div>
+<script th:inline="javascript">
+    $(function () {
+        $('#addnew').click(function () {
+            window.location.href = "/projectmember/add";
+        });
+        loadPage(1);
+    });
+
+    function loadPage(pageNo){
+        var id="";
+        var name="";
+        var business_status="";
+        var param={}
+
+        var pageParam = {};
+        pageParam["pageNo"]=pageNo;
+        pageParam["limit"]=20;
+        pageParam["param"]=param;
+
+        $.ajax({
+            url:"/projectmember/projects",
+            type:"post",
+            contentType:"application/json; charset=utf-8",
+            data:JSON.stringify(pageParam),
+            dataType:"json",
+            success:function(data){
+                if(data.status==0){
+                    var dataArray = data.data["items"];
+                    $("#project_membertable tbody").remove();
+                    var tbody = "<tbody>";
+                    var tr =
+                        '<tr content="{id}">' +
+                        '<td>{projectId}</td>' +
+                        '<td>{userId}</td>' +
+                        '<td>{name}</td>' +
+                        '<td>{planHour}</td>' +
+                        '<td>{startDate}</td>' +
+                        '<td>{endDate}</td>' +
+                        '<td>{businessStatus}</td>' +
+                        '<td class="td-manage">' +
+                        '<a href="javascript:void(0);" onclick="edit(this)">编辑</a>/' +
+                        '<a href="javascript:void(0);" onclick="del(this)">删除</a>/' +
+                        '<a href="javascript:void(0)" onclick="checked(this)">查看</a>'
+                        '</td></tr>';
+                    for (objT in dataArray){
+                        var obj = dataArray[objT];
+                        var newTR = tr;
+                        newTR=newTR
+                            .replace(new RegExp("{id}"),obj["id"]==undefined?"":obj["id"])
+                            .replace(new RegExp("{projectId}"),obj["projectId"]==undefined?"":obj["projectId"])
+                            .replace(new RegExp("{userId}"),obj["userId"]==undefined?"":obj["userId"])
+                            .replace(new RegExp("{name}"), obj["name"]==undefined?"":obj["name"])
+                            .replace(new RegExp("{planHour}"), obj["planHour"]==undefined?"":obj["planHour"])
+                            .replace(new RegExp("{startDate}"),obj["startDate"]==undefined?"":obj["startDate"])
+                            .replace(new RegExp("{endDate}"),obj["endDate"]==undefined?"":obj["endDate"])
+                            .replace(new RegExp("{businessStatus}"),obj["businessStatus"]==undefined?"":obj["businessStatus"]);
+                        tbody = tbody + newTR;
+                    }
+                    tbody = tbody + "</tbody>";
+                    $("#project_membertable").append(tbody);
+                }
+            }
+        });
+    }
+
+    function edit(obj){
+        var id=$(obj).parent().parent().attr("content");
+        window.location.href="/projectmember/edit?id="+id;
+    }
+
+    function del(obj){
+        var id=$(obj).parent().parent().attr("content");
+        var param={};
+        param["id"]=id;
+
+        $.ajax({
+            url:"/projectmember/delete",
+            type:"post",
+            contentType:"application/json; charset=utf-8",
+            data:JSON.stringify(param),
+            dataType:"json",
+            success:function(data){
+
+                if(data.status==0)
+                    loadPage(1);
+            }
+        });
+    }
+    function checked(obj){
+        var id=$(obj).parent().parent().attr("content");
+        window.location.href="/projectmember/show?id="+id;
+    }
+</script>
+
+</body>
+</html>

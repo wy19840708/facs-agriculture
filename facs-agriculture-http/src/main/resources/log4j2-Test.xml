@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="OFF" monitorInterval="1800">
+    <properties>
+        <property name="LOG_PATH">../logs/</property>
+        <property name="project_name">com.facs.agriculture</property>
+        <property name="pattern">[%level] [%date{ISO8601}] [%logger] [%thread] [] [%X{requestId}] [%X{serverIp}] %msg%n
+        </property>
+    </properties>
+    <appenders>
+        <Console name="Console" target="SYSTEM_OUT" follow="true">
+            <PatternLayout pattern="${pattern}"/>
+        </Console>
+
+        <RollingFile name="LogstashFile"
+                     fileName="${LOG_PATH}/${project_name}/logstash.log"
+                     filePattern="${LOG_PATH}/${project_name}/%d{yyyy-MM-dd}_logstash.log">
+            <PatternLayout pattern="${pattern}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="24" modulate="true"/>
+            </Policies>
+            <Filters>
+                <ThresholdFilter level="info"/>
+            </Filters>
+        </RollingFile>
+
+
+    </appenders>
+    <loggers>
+        <!-- 3rdparty Loggers -->
+        <AsyncLogger name="org.springframework" level="warn"/>
+        <AsyncLogger name="com.google" level="warn"/>
+        <AsyncLogger name="net.rubyeye" level="warn"/>
+        <AsyncLogger name="org.hibernate" level="warn"/>
+        <AsyncLogger name="com.alibaba.dubbo" level="debug"/>
+        <AsyncLogger name="org.mybatis" level="warn"/>
+        <AsyncLogger name="org.apache" level="warn"/>
+        <AsyncLogger name="springfox.documentation" level="warn"/>
+        <AsyncRoot level="info">
+            <appender-ref ref="Console"/>
+            <appender-ref ref="LogstashFile"/>
+        </AsyncRoot>
+    </loggers>
+
+</configuration>

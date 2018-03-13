@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="facs-agriculture-dao" />
+        <module name="facs-agriculture-http" />
+        <module name="facs-agriculture-iservice" />
+        <module name="facs-agriculture-service" />
+        <module name="facs-agriculture-support" />
+        <module name="facs-agriculture-test" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="facs-agriculture" target="1.8" />
+      <module name="facs-agriculture-dao" target="1.8" />
+      <module name="facs-agriculture-http" target="1.8" />
+      <module name="facs-agriculture-iservice" target="1.8" />
+      <module name="facs-agriculture-service" target="1.8" />
+      <module name="facs-agriculture-support" target="1.8" />
+      <module name="facs-agriculture-test" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
