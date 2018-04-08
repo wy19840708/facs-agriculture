@@ -40,6 +40,6 @@ public class ProjectMemberQueryRequest extends BaseRequest {
 	@ApiModelProperty(value = "人员ID,关联user表ID")
 	private Date userId;
 	@ApiModelProperty(value = "项目ID,关联project表ID")
-	private Date projectId;
+	private Long projectId;
 
 }

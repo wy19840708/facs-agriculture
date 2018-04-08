@@ -15,6 +15,8 @@ public interface ProjectMemberMapper {
 
 	ProjectMember load(Long id);
 
+	ProjectMember loadm(Long id);
+
 	List<ProjectMember> loadPageByPorjectid(Long projectId);
 
 	int insert(ProjectMember object);
@@ -24,6 +26,8 @@ public interface ProjectMemberMapper {
 	int delete(Long id);
 
     List<ProjectMember> loadAll();
+
+	List<ProjectMember> loadAllm();
 
 	ProjectMemberResponse load(ProjectMemberRequest paramData);
 

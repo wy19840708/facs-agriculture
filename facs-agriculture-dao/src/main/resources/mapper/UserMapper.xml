@@ -14,7 +14,7 @@
 		<result column="name" property="name" jdbcType="VARCHAR" />
 		<result column="password" property="password" jdbcType="VARCHAR" />
 	</resultMap>
-	
+
 	<sql id="Base_Column_List" >
 	    id,business_status,code,create_time,creator,data_status,dept_id,modifier,modify_time,name,password
 	</sql>
@@ -110,13 +110,35 @@
 		where data_status=1 and id = #{id}
 	</select>
 
+	<select id="loadu" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from user
+		where data_status=1 and id = #{id}
+	</select>
+
+	<select id="loadPageByUserid" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from user
+		where data_status=1 and id = #{userId,jdbcType=INTEGER}
+	</select>
+
+
+	<select id="loadAll" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List"/>
+		from user
+		where data_status=1
+	</select>
+
 	<select id="loadByCode" resultMap="BaseResultMap" parameterType="java.lang.String">
 		select
 		<include refid="Base_Column_List" />
 		from user
 		where data_status=1 and code = #{code}
 	</select>
-	
+
 	<insert id="insert" parameterType="com.facs.agriculture.support.model.po.User">
 		<selectKey keyProperty="id" resultType="java.lang.Long">
             select LAST_INSERT_ID()
@@ -124,7 +146,7 @@
 		insert into user (id,business_status,code,create_time,creator,data_status,dept_id,modifier,modify_time,name,password)
 		values (#{id,jdbcType=INTEGER},#{businessStatus,jdbcType=VARCHAR},#{code,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP},#{creator,jdbcType=INTEGER},#{dataStatus,jdbcType=INTEGER},#{deptId,jdbcType=INTEGER},#{modifier,jdbcType=INTEGER},#{modifyTime,jdbcType=TIMESTAMP},#{name,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR})
 	</insert>
-	
+
 	<update id="update" parameterType="com.facs.agriculture.support.model.po.User">
 		update user
 		<set>

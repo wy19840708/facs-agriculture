@@ -43,28 +43,22 @@
 
 <div class="x-body">
 	<table id="project_member_detailtable" class="table table-bordered table-hover definewidth m10">
-		<br />
-		<thead>
-		&nbsp;
-		周  数<select name="weekId" value="weekId" id="weekId">
-				<option th:each="resource : ${listm}" th:value="${resource.id}" th:text="${resource.week}"></option>
-			   </select>
 
-		员工姓名<select name="memberId" value="memberId" id="memberId">
+		<thead>
+
+				项目号<select name="codeId" value="codeId" id="codeId">
+				<option th:each="project : ${listp}" th:value="${project.id}" th:text="${project.code}"></option>
+			</select>
+
+				员工姓名<select name="memberId" value="memberId" id="memberId">
 					<option th:each="user: ${list}" th:value="${user.id-1}" th:text="${user.name}"></option>
 				</select>
-		<button type="button" value="btn btn-success" onclick="search()">查询信息-按周数人员</button>
-		</thead>
-		<br />
-		<thead>
 
-		项目号<select name="codeId" value="codeId" id="codeId">
-        <option th:each="project : ${listp}" th:value="${project.id}" th:text="${project.code}"></option>
-        </select>
-		<button type="button" value="btn btn-success" onclick="search2()">查询信息-按项目</button>
+                <td>
+				<button type="button" value="btn btn-success" onclick="search()">查询信息</button>
+				</td>
 
 		</thead>
-
 		<thead>
 		<tr>
 			<th>项目ID</th>
@@ -117,7 +111,7 @@
                     var tbody = "<tbody>";
                     var tr =
                         '<tr content="{id}">' +
-						'<td>{codeId}</td>' +
+                        '<td>{codeId}</td>' +
                         '<td>{memberId}</td>' +
                         '<td>{name}</td>' +
                         '<td>{week}</td>' +
@@ -168,18 +162,12 @@
     }
     function search(){
         var val = {};
-        val["weekId"]=$("#weekId").val();
-        val["memberId"]=$("#memberId").val();
-        alert("周数ID"+val["weekId"]+"员工ID"+val["memberId"]);
-        loadPage(1,val);
-    }
-    function search2(){
-        var val = {};
         val["codeId"]=$("#codeId").val();
-       /* val["memberId2"]=$("#memberId2").val();
-        alert(val["memberId2"]);*/
+        val["memberId"]=$("#memberId").val();
+        alert(val["memberId"]);
         loadPage(1,val);
     }
+
 
 </script>
 

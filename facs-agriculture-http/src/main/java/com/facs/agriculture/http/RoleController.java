@@ -30,11 +30,16 @@ public class RoleController {
 		return DataResult.ok(paging);
 	}
 
+
+
 	@RequestMapping(value="/{id}")
 	public @ResponseBody DataResult<RoleResponse> load(RoleRequest request) {
 		RoleResponse object = roleService.load(request);
 		return DataResult.ok(object);
 	}
+
+
+
 
 	@RequestMapping(value = "/create")
 	public @ResponseBody DataResult<SingleResponse<Long>> create(@RequestBody RoleRequest request) {

@@ -44,13 +44,36 @@
     <table id="project_membertable" class="table table-bordered table-hover definewidth m10">
         <thead>
         <tr>
-            <th>项目名称</th>
-            <td colspan="10">填入搜索到的项目名称</td>
+
+        <tr>
+           <td>
+                <select name="projectId" value="projectId" id="projectId">
+                <option th:each="project : ${list}" th:value="${project.id}" th:text="${project.code}"></option>
+            </select>
+            </td>
+            <td>
+            <button type="button" value="btn btn-success" onclick="search()">查询项目信息</button>
+            </td>
+        </tr>
+
+        <!--<tr>
+            <td>
+                <select name="memberId" value="memberId" id="memberId">
+                    <option th:each="projectmember : ${list}" th:value="${projectmember.id}" th:text="${projectmember.userId}"></option>
+                </select>
+            </td>
+            <td>
+                <button type="button" value="btn btn-success" onclick="searchm()">查询人员信息</button>
+            </td>
+        </tr>
+-->
+<!--
+            <td colspan="10">填入搜索到的项目名称</td>-->
         </tr>
         </thead>
         <thead>
         <tr>
-            <th>项目编号</th>
+            <th>项目ID</th>
             <th>人员工号</th>
             <th>姓名</th>
             <th>计划工时</th>
@@ -60,10 +83,8 @@
             <th>操作</th>
         </tr>
         </thead>
-
         <tbody>
         <tr content="">
-
             <td class="td-manage">
                 <a href="javascript:void(0);" id="editnew" >编辑</a>
                 <a href="javascript:void(0);">删除</a></td>
@@ -85,12 +106,11 @@
         loadPage(1);
     });
 
-    function loadPage(pageNo){
-        var id="";
-        var name="";
-        var business_status="";
-        var param={}
-
+    function loadPage(pageNo,val){
+        var param=val;
+        if(param==undefined){
+            param={};
+        }
         var pageParam = {};
         pageParam["pageNo"]=pageNo;
         pageParam["limit"]=20;
@@ -165,10 +185,32 @@
             }
         });
     }
-    function checked(obj){
+
+   function checked(obj){
         var id=$(obj).parent().parent().attr("content");
         window.location.href="/projectmember/show?id="+id;
     }
+
+ /* function checked(obj){
+        var id=$(obj).parent().parent().attr("content");
+        window.location.href="/role/show2?id="+id;
+    }*/
+
+
+    function search(){
+        var val = {};
+        val["projectId"]=$("#projectId").val();
+        alert(val["projectId"]);
+        loadPage(1,val);
+    }
+    function searchm(){
+        var val = {};
+        val["memberId"]=$("#memberId").val();
+        alert(val["memberId"]);
+        loadPage(1,val);
+    }
+
+
 </script>
 
 </body>

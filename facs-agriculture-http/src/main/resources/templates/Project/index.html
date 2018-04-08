@@ -71,6 +71,17 @@
         href='#'>2</a><a href='#'>3</a><a
         href='#'>4</a><a href='#'>5</a> <a href='#'>下5页</a> <a href='#'>最后一页</a>
 </div>
+
+
+<form action="/project/batchimport" method="post" enctype="multipart/form-data" onsubmit="return check();">
+    <div style="margin: 30px;">
+        <input id="excel_file" type="file" name="filename" accept="xlsx" size="80"/>
+        <input id="excel_button" type="submit" value="导入Excel"/></div>
+   <input type="hidden"/>
+
+</form>
+
+
 <script th:inline="javascript">
     $(function () {
         $('#addnew').click(function () {
@@ -161,6 +172,28 @@
         var id=$(obj).parent().parent().attr("content");
         window.location.href="/project/show?id="+id;
     }
+
+
+        function check() {
+            var excel_file = $("#excel_file").val();
+            if (excel_file == "" || excel_file.length == 0) {
+                alert("请选择文件路径！");
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        $(document).ready(function () {
+
+        var msg="";
+        if($("#importMsg").text()!=null){
+            msg=$("#importMsg").text();
+        }
+        if(msg!=""){
+            alert(msg);
+        }
+    });
 
 </script>
 

@@ -3,16 +3,20 @@ package com.facs.agriculture.service.impl;
 import com.facs.agriculture.dao.RoleMapper;
 import com.facs.agriculture.iservice.IRoleService;
 import com.facs.agriculture.support.model.bo.RoleQuery;
-import com.facs.agriculture.support.model.dto.RoleQueryRequest;
-import com.facs.agriculture.support.model.dto.RoleRequest;
-import com.facs.agriculture.support.model.dto.RoleResponse;
+import com.facs.agriculture.support.model.dto.*;
+import com.facs.agriculture.support.model.po.ProjectMember;
+import com.facs.agriculture.support.model.po.ProjectMemberDetail;
 import com.facs.agriculture.support.model.po.Role;
 import com.facs.basic.framework.common.util.FacsBeanUtils;
 import com.facs.basic.framework.model.bo.BoPageRequest;
 import com.facs.basic.framework.model.dto.PageRequest;
+import com.facs.basic.framework.model.rest.DataResult;
 import com.facs.basic.framework.model.rest.MutiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -21,6 +25,8 @@ public class RoleServiceImpl implements IRoleService {
 
 	@Autowired
 	private RoleMapper roleMapper;
+
+
 
 	@Override
 	public MutiResponse<RoleResponse> loadPage(PageRequest<RoleQueryRequest> paramData) {
@@ -48,6 +54,12 @@ public class RoleServiceImpl implements IRoleService {
 	public RoleResponse load(RoleRequest paramData) {
 		Role object = roleMapper.load(paramData.getId());
 		return FacsBeanUtils.copy(object,RoleResponse.class);
+	}
+
+	@Override
+	public List<Role> loadPageByRoleid(Long Id) {
+		List<Role> list = roleMapper.loadPageByRoleid(Id);
+		return list;
 	}
 
 	@Override

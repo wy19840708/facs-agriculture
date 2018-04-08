@@ -70,6 +70,9 @@ public class ProjectMemberDetailQuery implements Serializable {
 	 */
 	private Integer year;
 
-	private Integer projectId;
+	private Long codeId;
+
+	private Integer weekId;
+
 
 }

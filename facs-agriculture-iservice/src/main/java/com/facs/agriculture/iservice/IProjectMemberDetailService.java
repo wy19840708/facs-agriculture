@@ -21,5 +21,6 @@ public interface IProjectMemberDetailService {
 
     public void delete(ProjectMemberDetailRequest paramData);
 
-    List<ProjectMemberDetail> loadPageByPorjectid(Long id);
+    List<ProjectMemberDetail> loadPageByProjectid(Long id);
+
 }

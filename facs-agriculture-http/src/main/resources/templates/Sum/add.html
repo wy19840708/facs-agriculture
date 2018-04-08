@@ -37,19 +37,23 @@
     <table id="usertable" class="table table-bordered table-hover definewidth m10">
 
 
-        <tr>
+      <tr>
             <td>项目号</td>
             <td><select name="projectId" value="projectId" id="projectId">
-                <option th:each="project : ${list}" th:value="${project.id}" th:text="${project.code}"></option>
+                <option th:each="project : ${listp}" th:value="${project.id}" th:text="${project.code}"></option>
             </select>
             </td>
         </tr>
 
-        <tr>
-            <td width="10%" class="tableleft">员工工号</td>
-            <td><input type="text" name="user_id" value="" id="userId"/>
+
+       <tr>
+            <td>员工工号</td>
+            <td><select name="userId" value="userId" id="userId">
+                <option th:each="user: ${list}" th:value="${user.id}" th:text="${user.name}"></option>
+            </select>
             </td>
         </tr>
+
         <tr>
             <td width="10%" class="tableleft">员工姓名</td>
             <td><input type="text" name="name" value="" id="name"/>

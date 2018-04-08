@@ -1,119 +1,187 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title></title>
-<meta charset="UTF-8">
-<link rel="stylesheet" type="text/css" href="../Css/bootstrap.css" />
-<link rel="stylesheet" type="text/css"
-	href="../Css/bootstrap-responsive.css" />
-<link rel="stylesheet" type="text/css" href="../Css/style.css" />
-<script type="text/javascript" src="../Js/jquery.js"></script>
-<script type="text/javascript" src="../Js/jquery.sorted.js"></script>
-<script type="text/javascript" src="../Js/bootstrap.js"></script>
-<script type="text/javascript" src="../Js/ckform.js"></script>
-<script type="text/javascript" src="../Js/common.js"></script>
+    <title></title>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" type="text/css" href="../Css/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="../Css/bootstrap-responsive.css"/>
+    <link rel="stylesheet" type="text/css" href="../Css/style.css"/>
+    <script type="text/javascript" src="../Js/jquery.js"></script>
+    <script type="text/javascript" src="../Js/jquery.sorted.js"></script>
+    <script type="text/javascript" src="../Js/bootstrap.js"></script>
+    <script type="text/javascript" src="../Js/ckform.js"></script>
+    <script type="text/javascript" src="../Js/common.js"></script>
 
-<style type="text/css">
-body {
-	padding-bottom: 40px;
-}
+    <style type="text/css">
+        body {
+            padding-bottom: 40px;
+        }
 
-.sidebar-nav {
-	padding: 9px 0;
-}
+        .sidebar-nav {
+            padding: 9px 0;
+        }
 
-@media ( max-width : 980px) { /* Enable use of floated navbar text */
-	.navbar-text.pull-right {
-		float: none;
-		padding-left: 5px;
-		padding-right: 5px;
-	}
-}
-</style>
+        @media ( max-width: 980px) {
+            /* Enable use of floated navbar text */
+            .navbar-text.pull-right {
+                float: none;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+        }
+    </style>
+    <script type="text/javascript" src="../js/xiangmu.js"></script>
+
 </head>
 <body>
 
-	<form class="form-inline definewidth m20" action="index.html"
-		method="get">
-		项目编号： <input type="text" name="rolename" id="rolename"
-			class="abc input-default" placeholder="" value="">&nbsp;&nbsp;
-		<button type="submit" class="btn btn-primary">查询</button>
-		&nbsp;&nbsp;
-		<button type="button" class="btn btn-success" id="addnew">新增人员信息</button>
-	</form>
-	<table class="table table-bordered table-hover definewidth m10">
+<form class="form-inline definewidth m20" action="index.html"
+      method="get">
+    <button type="button" class="btn btn-success" id="addnew">新增项目信息</button>
+</form>
+<div class="x-body">
+    <table id="resourcetable" class="table table-bordered table-hover definewidth m10">
+        <!--<thead>
+        <tr>
 
-		<thead>
-			<tr>
-				<th>项目名称</th>
-				<td colspan="10">填入搜索到的项目名称</td>
-			</tr>
-		</thead>
-		<thead>
-		<center>
-			<tr>
-				<th>人员工号</th>
-				<th>姓名</th>
-				<th>参与项目开始日期</th>
-				<th>参与项目结束日期</th>
-				<th>项目状态</th>	
-				<th>操作</th>
-			</tr>
-				</center>
-		</thead>
-		    	<td>298075</td>
-				<td>陆磊</td>
-				<td>2017-01-10</td>
-				<td>2017-10-10</td>
-				<td>急</td>
-		
-			<td><a href="edit.html">编辑</a> <a title="删除" href="javascript:;"
-				onclick="data_management_del(this,'1')" style="text-decoration:none"
-				target="">删除</a>
-		</tr>
-	</table>
+        <tr>
+           &lt;!&ndash;<td>
+                <select name="projectId" value="projectId" id="projectId">
+                <option th:each="project : ${list}" th:value="${project.id}" th:text="${project.code}"></option>
+            </select>
+            </td>&ndash;&gt;
+            <td>
+            <button type="button" value="btn btn-success" onclick="search()">查询项目信息</button>
+            </td>
+        </tr>
+
+
+            <td colspan="10">填入搜索到的项目名称</td>
+        </tr>
+        </thead>-->
+        <thead>
+        <tr>
+            <th>项目ID</th>
+            <th>项目名称</th>
+            <th>周数</th>
+            <th>项目状态</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr content="">
+            <td class="td-manage">
+                <a href="javascript:void(0);" id="editnew" >编辑</a>
+                <a href="javascript:void(0);">删除</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="inline pull-right page">
+    50 条记录 1/5 页 <a href='#'>下一页</a> <span class='current'>1</span><a
+        href='#'>2</a><a href='#'>3</a><a
+        href='#'>4</a><a href='#'>5</a> <a href='#'>下5页</a> <a href='#'>最后一页</a>
+</div>
+<script th:inline="javascript">
+    $(function () {
+        $('#addnew').click(function () {
+            window.location.href = "/resource/add";
+        });
+        loadPage(1);
+    });
+
+    function loadPage(pageNo,val){
+        var param=val;
+        if(param==undefined){
+            param={};
+        }
+        var pageParam = {};
+        pageParam["pageNo"]=pageNo;
+        pageParam["limit"]=20;
+        pageParam["param"]=param;
+
+        $.ajax({
+            url:"/resource/resources",
+            type:"post",
+            contentType:"application/json; charset=utf-8",
+            data:JSON.stringify(pageParam),
+            dataType:"json",
+            success:function(data){
+                if(data.status==0){
+                    var dataArray = data.data["items"];
+                    $("#resourcetable tbody").remove();
+                    var tbody = "<tbody>";
+                    var tr =
+                        '<tr content="{id}">' +
+                        '<td>{pId}</td>' +
+                        '<td>{description}</td>' +
+                        '<td>{week}</td>' +
+                        '<td>{businessStatus}</td>' +
+                        '<td class="td-manage">' +
+                        '<a href="javascript:void(0);" onclick="edit(this)">编辑</a>/' +
+                        '<a href="javascript:void(0);" onclick="del(this)">删除</a>/' +
+                        '<a href="javascript:void(0)" onclick="checked(this)">查看</a>'
+                        '</td></tr>';
+                    for (objT in dataArray){
+                        var obj = dataArray[objT];
+                        var newTR = tr;
+                        newTR=newTR
+                            .replace(new RegExp("{id}"),obj["id"]==undefined?"":obj["id"])
+                            .replace(new RegExp("{pId}"),obj["pId"]==undefined?"":obj["pId"])
+                            .replace(new RegExp("{description}"), obj["description"]==undefined?"":obj["description"])
+                            .replace(new RegExp("{week}"),obj["week"]==undefined?"":obj["week"])
+                            .replace(new RegExp("{businessStatus}"),obj["businessStatus"]==undefined?"":obj["businessStatus"]);
+                        tbody = tbody + newTR;
+                    }
+                    tbody = tbody + "</tbody>";
+                    $("#resourcetable").append(tbody);
+                }
+            }
+        });
+    }
+
+    function edit(obj){
+        var id=$(obj).parent().parent().attr("content");
+        window.location.href="/resource/edit?id="+id;
+    }
+
+    function del(obj){
+        var id=$(obj).parent().parent().attr("content");
+        var param={};
+        param["id"]=id;
+
+        $.ajax({
+            url:"/resourcetable/delete",
+            type:"post",
+            contentType:"application/json; charset=utf-8",
+            data:JSON.stringify(param),
+            dataType:"json",
+            success:function(data){
+
+                if(data.status==0)
+                    loadPage(1);
+            }
+        });
+    }
+
+   function checked(obj){
+        var id=$(obj).parent().parent().attr("content");
+        window.location.href="/resource/show?id="+id;
+    }
+
+
+
+    function search(){
+        var val = {};
+        val["projectId"]=$("#projectId").val();
+        alert(val["projectId"]);
+        loadPage(1,val);
+    }
+
+
+</script>
 
 </body>
 </html>
-<script src="Js/lib/layui/layui.js" charset="utf-8"></script>
-<script src="Js/x-layui.js" charset="utf-8"></script>
-<script>
-
-	$(function() {
-		$('#addnew').click(function() {
-
-			window.location.href = "add.html";
-		});
-
-	});
-
-	layui.use([ 'element', 'laypage', 'layer', 'form' ], function() {
-		$ = layui.jquery;//jquery
-		lement = layui.element();//面包导航
-		laypage = layui.laypage;//分页
-		layer = layui.layer;//弹出层
-		form = layui.form();//弹出层 
-
-		//以上模块根据需要引入
-		laypage({
-			cont : 'page',
-			pages : 5,
-			first : 1,
-			last : 5,
-			prev : '<em><</em>',
-			next : '<em>></em>'
-		});
-	})
-	//以上模块根据需要引入
-	/*删除*/
-	function data_management_del(obj, id) {
-		layer.confirm('确认要删除吗？', function(index) {
-			//发异步删除数据
-			$(obj).parents("tr").remove();
-			layer.msg('已删除!', {
-				icon : 1,
-				time : 1000
-			});
-		});
-	}
-</script>

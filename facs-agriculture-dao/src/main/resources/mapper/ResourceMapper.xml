@@ -10,13 +10,14 @@
 		<result column="description" property="description" jdbcType="VARCHAR" />
 		<result column="modifier" property="modifier" jdbcType="INTEGER" />
 		<result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
-		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="week" property="week" jdbcType="INTEGER" />
 		<result column="p_id" property="pId" jdbcType="INTEGER" />
 		<result column="path_info" property="pathInfo" jdbcType="VARCHAR" />
+
 	</resultMap>
 	
 	<sql id="Base_Column_List" >
-	    id,business_status,create_time,creator,data_status,description,modifier,modify_time,name,p_id,path_info
+	    id,business_status,create_time,creator,data_status,description,modifier,modify_time,week,p_id,path_info
 	</sql>
 
 	<select id="loadPage" resultMap="BaseResultMap" parameterType="map">
@@ -49,8 +50,8 @@
 		<if test="paramData.modifyTime != null">
 			and modify_time = #{paramData.modifyTime,jdbcType=TIMESTAMP}
 		</if>
-		<if test="paramData.name != null">
-			and name = #{paramData.name,jdbcType=VARCHAR}
+		<if test="paramData.week != null">
+			and week = #{paramData.week,jdbcType=INTEGER}
 		</if>
 		<if test="paramData.pId != null">
 			and p_id = #{paramData.pId,jdbcType=INTEGER}
@@ -58,6 +59,7 @@
 		<if test="paramData.pathInfo != null">
 			and path_info = #{paramData.pathInfo,jdbcType=VARCHAR}
 		</if>
+
 		</where>
 		limit #{start},#{pageSize}
 	</select>
@@ -91,8 +93,8 @@
 		<if test="modifyTime != null">
 			and modify_time = #{modifyTime,jdbcType=TIMESTAMP}
 		</if>
-		<if test="name != null">
-			and name = #{name,jdbcType=VARCHAR}
+		<if test="week != null">
+			and week = #{week,jdbcType=INTEGER}
 		</if>
 		<if test="pId != null">
 			and p_id = #{pId,jdbcType=INTEGER}
@@ -110,6 +112,13 @@
 		where data_status=1 and id = #{id}
 	</select>
 
+	<select id="loadAll" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List"/>
+		from resource
+		where data_status=1
+	</select>
+
 	<select id="existsByPath" resultType="java.lang.Long" parameterType="java.lang.String">
 		select count(1)
 		from resource
@@ -121,7 +130,8 @@
             select LAST_INSERT_ID()
         </selectKey>
 		insert into resource (id,business_status,create_time,creator,data_status,description,modifier,modify_time,name,p_id,path_info)
-		values (#{id,jdbcType=INTEGER},#{businessStatus,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP},#{creator,jdbcType=INTEGER},#{dataStatus,jdbcType=INTEGER},#{description,jdbcType=VARCHAR},#{modifier,jdbcType=INTEGER},#{modifyTime,jdbcType=TIMESTAMP},#{name,jdbcType=VARCHAR},#{pId,jdbcType=INTEGER},#{pathInfo,jdbcType=VARCHAR})
+		values (#{id,jdbcType=INTEGER},#{businessStatus,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP},#{creator,jdbcType=INTEGER},
+		#{dataStatus,jdbcType=INTEGER},#{description,jdbcType=VARCHAR},#{modifier,jdbcType=INTEGER},#{modifyTime,jdbcType=TIMESTAMP},#{week,jdbcType=INTEGER},#{pId,jdbcType=INTEGER},#{pathInfo,jdbcType=VARCHAR})
 	</insert>
 	
 	<update id="update" parameterType="com.facs.agriculture.support.model.po.Resource">
@@ -148,8 +158,8 @@
 			<if test="modifyTime != null">
 				modify_time = #{modifyTime,jdbcType=TIMESTAMP},
 			</if>
-			<if test="name != null">
-				name = #{name,jdbcType=VARCHAR},
+			<if test="week != null">
+				week = #{week,jdbcType=INTEGER},
 			</if>
 			<if test="pId != null">
 				p_id = #{pId,jdbcType=INTEGER},

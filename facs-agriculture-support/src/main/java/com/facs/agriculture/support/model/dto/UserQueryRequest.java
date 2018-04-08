@@ -20,7 +20,7 @@ public class UserQueryRequest extends BaseRequest {
 	@ApiModelProperty(value = "业务状态")
 	private String businessStatus;
 	@ApiModelProperty(value = "编码")
-	private String code;
+	private Long code;
 	@ApiModelProperty(value = "创建时间")
 	private Date createTime;
 	@ApiModelProperty(value = "创建人。关联user表ID")

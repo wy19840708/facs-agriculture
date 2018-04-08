@@ -44,6 +44,7 @@ public class ProjectMemberDetailRequest extends BaseRequest {
 	@ApiModelProperty(value = "年份")
 	private Integer year;
 	@ApiModelProperty(value = "项目号")
-	private Integer projectId;
-
+	private Long codeId;
+	@ApiModelProperty(value = "人员号")
+	private Integer weekId;
 }

@@ -34,26 +34,56 @@
 <body>
 <form action="index.html" method="post" class="definewidth m20">
     <input type="hidden" name="id" value=""/>
-    <table class="table table-bordered table-hover ">
 
+    <table class="table table-bordered table-hover ">
         <tr>
-            <td>员工工号</td>
-            <td><select name="memberId" value="memberId" id="memberId">
-                <option th:each="projectmember : ${list}" th:value="${projectmember.id}" th:text="${projectmember.userId}"></option>
+            <td>项目号</td>
+
+            <td><select name="codeId" value="codeId" id="codeId">
+                <option th:each="project : ${listp}" th:value="${project.id}" th:text="${project.code}"></option>
             </select>
             </td>
         </tr>
 
 
         <tr>
+            <td>员工工号</td>
+
+           <td><select name="userId" value="userId" id="memberId">
+                <option th:each="user: ${list}" th:value="${user.id}" th:text="${user.code}"></option>
+            </select>
+            </td>
+        </tr>
+
+        <tr>
             <td width="10%" class="tableleft">员工姓名</td>
             <td><input type="text" name="name" id="name"/></td>
         </tr>
+
         <tr>
+            <td>周数ID</td>
+            <td><select name="weekId" value="weekId" id="weekId">
+                <option th:each="resource : ${listm}" th:value="${resource.id}" th:text="${resource.id}"></option>
+            </select>
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>周数</td>
+            <td><select name="week" value="week" id="week">
+                <option th:each="resource : ${listm}" th:value="${resource.id}" th:text="${resource.week}"></option>
+            </select>
+            </td>
+        </tr>
+
+        <!--<tr>
             <td width="10%" class="tableleft">周数</td>
 
-            <td><span id="show_week"></span></td>
+            <td><span id="show_weeks"></span></td>
         </tr>
+-->
+
         <tr>
             <td width="10%" class="tableleft">工时分配</td>
             <td><input type="text" name="man_hour" id="manHour"/></td>
@@ -67,6 +97,7 @@
                     <input type="date"  name='date1' value='' id="start_date"/></label>
             </td>
         </tr>
+
         <tr>
             <td class="tableleft"></td>
             <td>
@@ -86,22 +117,28 @@
     $(function () {
         $("#addProject_member_detail").click(function () {
 
-            alert($("#show_week").html());
+            alert($("#codeId").val());
 
             ///document.getElementById("show_week").value=week;
-
+            var code_id = $("#codeId").val();
             var member_id = $("#memberId").val();
             var name = $("#name").val();
-            var week = $("#show_week").html();
+            var week_id = $("#weekId").val();
+            var week = $("#week").val();
+           /* var week = $("#show_weeks").html();*/
             var man_hour = $("#manHour").val();
             var start_date = $("#startDate").val();
+
             var param={};
 
+            param["codeId"]=code_id;
             param["memberId"]=member_id;
             param["name"]=name;
+            param["weekId"]=week_id;
             param["week"]=week;
             param["manHour"]=man_hour;
             param["startDate"]=start_date;
+            /*param["endDate"]=end_date;*/
 
             $.ajax({
                 url:"/projectmemberdetail/create",
@@ -127,9 +164,19 @@
         var weekNum = weekOfYear(vals[0], vals[1], vals[2]);
 
         alert(typeof(weekNum));
-        $("#show_week").text(weekNum);
+        $("#show_weeks").text(weekNum);
 
     });
+    $("#end_date").change(function() {
+        var value = $(this).val();
+        var vals = value.split("-");
+        var weekNum = weekOfYear(vals[0], vals[1], vals[2]);
+
+        alert(typeof(weekNum));
+        $("#show_weeke").text(weekNum);
+
+    });
+
 
     //  计算日期为当年的第几周
     function weekOfYear(year, month, day) {

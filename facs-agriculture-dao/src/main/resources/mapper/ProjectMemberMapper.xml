@@ -125,6 +125,12 @@
 		where data_status=1 and id = #{id}
 	</select>
 
+	<select id="loadm" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from project_member
+		where data_status=1 and id = #{id}
+	</select>
 
 	<select id="loadPageByPorjectid" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select
@@ -140,6 +146,12 @@
 		where data_status=1
 	</select>
 
+	<select id="loadAllm" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List"/>
+		from project_member
+		where data_status=1
+	</select>
 
 
 	<insert id="insert" parameterType="com.facs.agriculture.support.model.po.ProjectMember">

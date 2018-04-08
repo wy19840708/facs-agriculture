@@ -1,26 +1,21 @@
 package com.facs.agriculture.service.impl;
 
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.facs.agriculture.dao.ProjectMemberMapper;
+import com.facs.agriculture.iservice.IProjectMemberDetailService;
 import com.facs.basic.framework.common.util.FacsBeanUtils;
 import com.facs.basic.framework.model.bo.BoPageRequest;
 import com.facs.basic.framework.model.dto.PageRequest;
 import com.facs.basic.framework.model.rest.MutiResponse;
 import com.facs.agriculture.dao.ProjectMemberDetailMapper;
-import com.facs.agriculture.iservice.IProjectMemberDetailService;
 import com.facs.agriculture.support.model.bo.*;
 import com.facs.agriculture.support.model.dto.*;
 import com.facs.agriculture.support.model.po.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 @Service("projectMemberDetailService")
 public class ProjectMemberDetailServiceImpl implements IProjectMemberDetailService {
@@ -31,10 +26,10 @@ public class ProjectMemberDetailServiceImpl implements IProjectMemberDetailServi
 	@Override
 	public MutiResponse<ProjectMemberDetailResponse> loadPage(PageRequest<ProjectMemberDetailQueryRequest> paramData) {
 
-	paramData.getParam().setName(StringUtils.trimToNull(paramData.getParam().getName()));
+		paramData.getParam().setName(StringUtils.trimToNull(paramData.getParam().getName()));
 
-	//转换查询条件的格式
-    	BoPageRequest<ProjectMemberDetailQuery> daoRequest = new BoPageRequest<>();
+		//转换查询条件的格式
+		BoPageRequest<ProjectMemberDetailQuery> daoRequest = new BoPageRequest<>();
 		daoRequest.setPageNum(paramData.getPageNo());
 		daoRequest.setPageSize(paramData.getLimit());
 		daoRequest.setStart((paramData.getPageNo()-1)*paramData.getLimit());
@@ -53,11 +48,12 @@ public class ProjectMemberDetailServiceImpl implements IProjectMemberDetailServi
 		return  pageResponse;
 	}
 
-    @Override
+	@Override
 	public ProjectMemberDetailResponse load(ProjectMemberDetailRequest paramData) {
 		ProjectMemberDetail object = projectMemberDetailMapper.load(paramData.getId());
 		return FacsBeanUtils.copy(object,ProjectMemberDetailResponse.class);
 	}
+
 
 	@Override
 	public List<ProjectMemberDetail> loadPageByMemberid(Long memberId) {
@@ -66,10 +62,15 @@ public class ProjectMemberDetailServiceImpl implements IProjectMemberDetailServi
 	}
 
 
+	@Autowired
+	private ProjectMemberMapper projectMemberMapper;
+
 	@Override
 	public ProjectMemberDetailResponse create(ProjectMemberDetailRequest paramData) {
 		ProjectMemberDetail newObj = FacsBeanUtils.copy(paramData, ProjectMemberDetail.class);
 
+		ProjectMember member = projectMemberMapper.load(newObj.getMemberId());
+		/*newObj.setUserId(member.getUserId());*/
 		newObj.setDataStatus(1);
 		newObj.setBusinessStatus("1");
 		newObj.setCreateTime(new Date());
@@ -92,11 +93,8 @@ public class ProjectMemberDetailServiceImpl implements IProjectMemberDetailServi
 	}
 
 	@Override
-	public List<ProjectMemberDetail> loadPageByPorjectid(Long id) {
+	public List<ProjectMemberDetail> loadPageByProjectid(Long id) {
 		return null;
 	}
 
-
-
 }
-

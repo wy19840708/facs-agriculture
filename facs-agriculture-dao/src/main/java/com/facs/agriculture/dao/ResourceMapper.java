@@ -1,5 +1,7 @@
 package com.facs.agriculture.dao;
 
+import com.facs.agriculture.support.model.po.Project;
+import com.facs.agriculture.support.model.po.ProjectMember;
 import com.facs.basic.framework.model.bo.BoPageRequest;
 import com.facs.agriculture.support.model.bo.ResourceQuery;
 import com.facs.agriculture.support.model.po.Resource;
@@ -18,4 +20,6 @@ public interface ResourceMapper {
 	int insert(Resource object);
 
 	int update(Resource object);
+
+	List<Resource>loadAll();
 }

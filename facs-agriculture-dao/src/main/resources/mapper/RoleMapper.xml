@@ -102,7 +102,7 @@
 		from role
 		where data_status=1 and id = #{id}
 	</select>
-	
+
 	<insert id="insert" parameterType="com.facs.agriculture.support.model.po.Role">
 		<selectKey keyProperty="id" resultType="java.lang.Long">
             select LAST_INSERT_ID()

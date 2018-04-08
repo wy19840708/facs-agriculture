@@ -32,7 +32,11 @@
 </style>
 <body>
 <form action="index.html" method="post" class="definewidth m20">
+
 	<input type="hidden" name="id" id="id" th:value="${id}"/>
+
+	<input type="hidden" name="codeId" id="codeId" th:value="${codeId}"/>
+
 	<table class="table table-bordered table-hover ">
 
 
@@ -82,6 +86,7 @@
             success:function (data) {
                 if(data.status==0){
                     var objd = data["data"];
+                    $("#codeId").val(objd["codeId"]);
                     $("#memberId").val(objd["memberId"]);
                     $("#name").val(objd["name"]);
                     $("#week").val(objd["week"]);
@@ -95,6 +100,7 @@
 
         $("#addProject_member_detail").click(function () {
             var id = $("#id").val();
+            var code_id = $("#codeId").val();
             var member_id = $("#memberId").val();
             var name = $("#name").val();
             var week = $("#week").val();
@@ -102,6 +108,7 @@
             var param={};
 
             param["id"]=id;
+            param["codeId"]=code_id;
             param["memberId"]=member_id;
             param["name"]=name;
             param["week"]=week;

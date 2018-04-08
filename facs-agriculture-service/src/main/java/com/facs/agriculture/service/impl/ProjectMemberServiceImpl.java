@@ -6,7 +6,7 @@ import com.facs.agriculture.support.model.bo.ProjectMemberQuery;
 import com.facs.agriculture.support.model.dto.ProjectMemberQueryRequest;
 import com.facs.agriculture.support.model.dto.ProjectMemberRequest;
 import com.facs.agriculture.support.model.dto.ProjectMemberResponse;
-import com.facs.agriculture.support.model.po.Project;
+import com.facs.agriculture.support.model.dto.ProjectRequest;
 import com.facs.agriculture.support.model.po.ProjectMember;
 import com.facs.basic.framework.common.util.FacsBeanUtils;
 import com.facs.basic.framework.model.bo.BoPageRequest;
@@ -60,6 +60,12 @@ public class ProjectMemberServiceImpl implements IProjectMemberService {
         return FacsBeanUtils.copy(object, ProjectMemberResponse.class);
     }
 
+    @Override
+    public ProjectMemberResponse loadm(ProjectMemberRequest paramDatam) {
+        ProjectMember objectm = projectMemberMapper.loadm(paramDatam.getId());
+        return FacsBeanUtils.copy(objectm, ProjectMemberResponse.class);
+    }
+
 
     @Override
     public List<ProjectMember> loadPageByPorjectid(Long projectId) {
@@ -72,6 +78,13 @@ public class ProjectMemberServiceImpl implements IProjectMemberService {
         List<ProjectMember> list = projectMemberMapper.loadAll();
         return list;
     }
+
+    @Override
+    public  List<ProjectMember> loadAllm() {
+        List<ProjectMember> listm = projectMemberMapper.loadAllm();
+        return listm;
+    }
+
 
     @Override
     public ProjectMemberResponse create(ProjectMemberRequest paramData) {
@@ -96,4 +109,6 @@ public class ProjectMemberServiceImpl implements IProjectMemberService {
     public void delete(ProjectMemberRequest paramData) {
         projectMemberMapper.delete(paramData.getId());
     }
+
+
 }

@@ -48,7 +48,7 @@ public class ResourceQuery implements Serializable {
 	/**
 	 * 名称
 	 */
-	private String name;
+	private Long week;
 	/**
 	 * 父节点
 	 */

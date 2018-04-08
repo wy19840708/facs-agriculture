@@ -31,8 +31,8 @@ public class ResourceRequest extends BaseRequest {
 	private Long modifier;
 	@ApiModelProperty(value = "修改时间")
 	private Date modifyTime;
-	@ApiModelProperty(value = "名称")
-	private String name;
+	@ApiModelProperty(value = "周数")
+	private Long week;
 	@ApiModelProperty(value = "父节点")
 	private Long pId;
 	@ApiModelProperty(value = "资源路径")

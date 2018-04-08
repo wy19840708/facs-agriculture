@@ -16,4 +16,6 @@ public interface RoleMapper {
 	int insert(Role object);
 
 	int update(Role object);
+
+    List<Role> loadPageByRoleid(Long id);
 }

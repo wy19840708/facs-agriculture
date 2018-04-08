@@ -20,8 +20,13 @@ public class ResourceController {
 	private IResourceService resourceService;
 
 	@RequestMapping(value="index")
-    public String index(){
-		return "index";
+	public String index(){
+		return "Person/index";
+	}
+
+	@RequestMapping(value = "add")
+	public String add() {
+		return "Person/add";
 	}
 
 	@RequestMapping(value="/resources")
@@ -29,6 +34,7 @@ public class ResourceController {
 		MutiResponse<ResourceResponse> paging = resourceService.loadPage(paramData);
 		return DataResult.ok(paging);
 	}
+
 
 	@RequestMapping(value="/{id}")
 	public @ResponseBody DataResult<ResourceResponse> load(ResourceRequest request) {
